@@ -1,0 +1,36 @@
+Код:
+const int trigPin = 3;
+const int echoPin = 4;
+
+void setup()
+{
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  Serial.begin(9600);
+}
+
+int getDistance()
+{
+  int distance;
+  unsigned long pulseduration = 0;
+
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  pulseduration = pulseIn(echoPin, HIGH);
+
+  pulseduration = pulseduration / 2;
+  distance = int(pulseduration / 29);
+  return distance;
+}
+
+void loop()
+{
+  Serial.print(getDistance());
+  Serial.println(" cm ");
+  delay(500);
+}
